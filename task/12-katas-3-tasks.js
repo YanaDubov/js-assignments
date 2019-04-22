@@ -7,7 +7,7 @@
  *
  * @param {array} puzzle
  * @param {array} searchStr
- * @return {bool}
+ * @return {boolean}
  *
  * @example
  *   var puzzle = [ 
@@ -28,6 +28,47 @@
  *   'NULL'      => false 
  */
 function findStringInSnakingPuzzle(puzzle, searchStr) {
+    let Visited = (point) => {
+        for (let pos of visited)
+            if ((pos[0] == point[0]) && (pos[1] == point[1]))
+                return true;
+        return false;
+    }
+
+    let Parse = (start, point) => {
+        //puzzle = array of words, start = current letter of search str, point is [i,j] in puzzle, where are we now
+        if (start == searchStr.length - 1)
+            return (puzzle[point[0]][point[1]] == searchStr[start]) && (!Visited([point[0], point[1]]));
+        //case for last letter
+        if ((puzzle[point[0]][point[1]] == searchStr[start]) && (!Visited([point[0], point[1]]))) {
+            let result = false;
+            visited.push([point[0], point[1]]);
+            //this point is visited
+            if (point[0] > 0)
+                result |= Parse(start + 1, [point[0] - 1, point[1]]);
+            //parse up
+            if (point[1] < puzzle[point[0]].length - 1)
+                result |= Parse(start + 1, [point[0], point[1] + 1]);
+            //parse right
+            if (point[0] < puzzle.length - 1)
+                result |= Parse(start + 1, [point[0] + 1, point[1]]);
+            //parse down
+            if (point[1] > 0)
+                result |= Parse(start + 1, [point[0], point[1] - 1]);
+            //parse left
+            visited.pop();
+            return result;
+        }
+        return false;
+    }
+
+    let result = false;
+    let visited = new Array();
+    for (let i = 0; i < puzzle.length; i++)
+        for (let j = 0; j < puzzle[i].length; j++)
+            result |= Parse(0, [i, j]);
+
+    return result;
     throw new Error('Not implemented');
 }
 
@@ -45,7 +86,29 @@ function findStringInSnakingPuzzle(puzzle, searchStr) {
  *    'abc' => 'abc','acb','bac','bca','cab','cba'
  */
 function* getPermutations(chars) {
-    throw new Error('Not implemented');
+    function getAllPermutations(string) {
+        let results = [];
+        if (string.length < 1) {
+            results.push(string);
+            return results;
+        }
+        for (let i = 0; i < string.length; i++) {
+            let firstChar = string[i];
+            let charsLeft = string.substring(0, i) + string.substring(i + 1);
+            //get substr for permutation
+            let partPerms = getAllPermutations(charsLeft);
+            //get perms of substring
+            for (let j = 0; j < partPerms.length; j++) {
+                results.push(firstChar + partPerms[j]);
+                //add results in format: current char + every part permutation
+            }
+        }
+        return results;
+    }
+    for(let perm of getAllPermutations(chars)){
+        yield perm;
+    }
+    //throw new Error('Not implemented');
 }
 
 
@@ -65,6 +128,7 @@ function* getPermutations(chars) {
  *    [ 1, 6, 5, 10, 8, 7 ] => 18  (buy at 1,6,5 and sell all at 10)
  */
 function getMostProfitFromStockQuotes(quotes) {
+
     throw new Error('Not implemented');
 }
 
@@ -85,19 +149,9 @@ function getMostProfitFromStockQuotes(quotes) {
  */
 function UrlShortener() {
     this.urlAllowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"+
-                           "abcdefghijklmnopqrstuvwxyz"+
-                           "0123456789-_.~!*'();:@&=+$,/?#[]";
-}
-
-UrlShortener.prototype = {
-
-    encode: function(url) {
-        throw new Error('Not implemented');
-    },
-    
-    decode: function(code) {
-        throw new Error('Not implemented');
-    } 
+        "abcdefghijklmnopqrstuvwxyz"+
+        "0123456789-_.~!*'();:@&=+$,/?#[]";
+    throw new Error('Not implemented');
 }
 
 

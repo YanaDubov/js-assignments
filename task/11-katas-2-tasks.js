@@ -34,6 +34,7 @@
  *
  */
 function parseBankAccount(bankAccount) {
+
     throw new Error('Not implemented');
 }
 
@@ -63,7 +64,7 @@ function parseBankAccount(bankAccount) {
  *                                                                                                'characters.'
  */
 function* wrapText(text, columns) {
-    throw new Error('Not implemented');
+     throw new Error('Not implemented');
 }
 
 
@@ -100,6 +101,7 @@ const PokerRank = {
 }
 
 function getPokerHandRank(hand) {
+
     throw new Error('Not implemented');
 }
 
@@ -135,7 +137,7 @@ function getPokerHandRank(hand) {
  *    '+-------------+\n'
  */
 function* getFigureRectangles(figure) {
-   throw new Error('Not implemented');
+    throw new Error('Not implemented');
 }
 
 
